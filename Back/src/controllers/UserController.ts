@@ -7,15 +7,14 @@ export class UserController{
     public static async createUser(request:Request, response:Response){
         
         try{
-            const {cpf, telefone, name, email, password, avatarUrl} = request.body;
+            const {cpf, telefone, name, email, password} = request.body;
 
             const createInput: Prisma.UserCreateInput = {
                 cpf: cpf,
                 telefone: telefone,
                 name: name,
                 email: email,
-                password: password,
-                avatarUrl: avatarUrl,
+                password: password
             };
 
             const createdUser = await prisma.user.create({

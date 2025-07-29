@@ -11,7 +11,6 @@ export class ProductController {
         price,
         condition,
         amountInStock,
-        imageUrl,
         isAvailable
       } = req.body;
 
@@ -21,7 +20,6 @@ export class ProductController {
         price,
         condition,
         amountInStock,
-        imageUrl,
         isAvailable
       };
 

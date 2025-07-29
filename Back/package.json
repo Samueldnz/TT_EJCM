@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx ts-node-dev --transpile-only --no-notify server.ts"
   },
   "prisma": {
     "schema": "src/models/schema.prisma",
-    "start": "npx ts-node-dev --transpile-only --no-notify server.ts"
+    "seed": "ts-node src/models/seed/seeder.ts"
   },
   "keywords": [],
   "author": "",

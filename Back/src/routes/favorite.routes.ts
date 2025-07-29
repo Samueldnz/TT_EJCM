@@ -3,10 +3,10 @@ import { FavoriteController } from "../controllers/FavoriteController";
 
 const router = Router();
 
-router.post("/favorite", FavoriteController.createFavorite);
-router.get("/favorite/:id", FavoriteController.readFavorite);
-router.get("/favorite", FavoriteController.readAllFavorites);
-router.put("/favorite/:id", FavoriteController.updateFavorite);
-router.delete("/favorite/:id", FavoriteController.deleteFavorite);
+router.post("/", FavoriteController.createFavorite);
+router.get("/:id", FavoriteController.readFavorite);
+router.get("/", FavoriteController.readAllFavorites);
+router.put("/:id", FavoriteController.updateFavorite);
+router.delete(":id", FavoriteController.deleteFavorite);
 
 export default router;
