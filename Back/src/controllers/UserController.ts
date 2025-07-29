@@ -39,8 +39,12 @@ export class UserController{
                     id: userId
                 },
                 select: {
-                    id: false
-                },
+                    cpf: true,
+                    telefone: true,
+                    name: true,
+                    email: true,
+                    avatarUrl: true,
+                }
             });
 
             response.status(200).json({foundUser});
@@ -53,9 +57,6 @@ export class UserController{
     public static async readAllUser(request:Request, response:Response){
         
         try{
-            
-            const {userId} = request.params; 
-
             const users = await prisma.user.findMany();
 
             response.status(200).json({users});
@@ -93,46 +94,6 @@ export class UserController{
         }
     }
 
-
-    public static async upserUser(request:Request, response:Response){
-        
-        try{
-
-            const {userId} = request.params; 
-            const {cpf, telefone, name, email, password, avatarUrl} = request.body;
-
-            const createInput: Prisma.UserCreateInput = {
-                cpf: cpf,
-                telefone: telefone,
-                name: name,
-                email: email,
-                password: password,
-                avatarUrl: avatarUrl,
-            };
-
-            const updateInput: Prisma.UserUpdateInput = {
-                cpf: cpf,
-                telefone: telefone,
-                name: name,
-                email: email,
-                password: password,
-                avatarUrl: avatarUrl,
-            };
-
-            const upsertedUser = await prisma.user.upsert({
-                create: createInput,
-                update: updateInput,
-                where: {
-                    id: userId,
-                },
-            });
-
-            response.status(200).json({upsertedUser});
-        }catch (error:any){
-            response.status(500).json({message:error.message});
-        }
-    }
-
     public static async deleteUser(request:Request, response:Response){
         
         try{
@@ -144,18 +105,6 @@ export class UserController{
                     id: userId
                 }
             })
-
-            response.status(200).json({deletedUser});
-        }catch (error:any){
-            response.status(500).json({message:error.message});
-        }
-    }
-
-    public static async deleteAllUser(request:Request, response:Response){
-        
-        try{
-            
-            const deletedUser = await prisma.user.deleteMany();
 
             response.status(200).json({deletedUser});
         }catch (error:any){
