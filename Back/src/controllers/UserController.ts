@@ -2,7 +2,7 @@ import { Prisma, PrismaClient } from "../generated/prisma";
 import {Request, Response } from "express";
 const prisma = new PrismaClient()
 
-class UserController{
+export class UserController{
 
     public static async createUser(request:Request, response:Response){
         
@@ -37,6 +37,9 @@ class UserController{
             const foundUser = await prisma.user.findUnique({
                 where: {
                     id: userId
+                },
+                select: {
+                    id: false
                 },
             });
 
