@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Menu, ShoppingCart, Heart } from "lucide-react";
+import { Menu, ShoppingCart} from "lucide-react";
 
-import BannerCarousel from "../components/BannerCarousel";
 import ProductSection from "../components/ProductSection";
 import { FaFacebookF, FaInstagram, FaTiktok, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 
