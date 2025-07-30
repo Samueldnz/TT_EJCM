@@ -118,4 +118,26 @@ export class UserController{
             response.status(500).json({message:error.message});
         }
     }
+
+    public static async uploadAvatar(req: Request, res: Response) {
+        try {
+            const { id } = req.params;
+
+            if (!req.file) {
+                return res.status(400).json({ message: "Nenhum arquivo enviado." });
+            }
+
+            const avatarPath = `/uploads/photos/${req.file.filename}`;
+
+            const user = await prisma.user.update({
+                where: { id },
+                data: { avatarUrl: avatarPath }
+            });
+
+            res.status(200).json({ message: "Avatar atualizado com sucesso!", user });
+        } catch (error: any) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
 import { validateBody, validateParams } from '../middlewares/ValidateMiddleware';
 import userValidator from '../config/UserValidator';
+import { photoUpload } from '../config/uploader';
 
 const router = Router();
 
@@ -29,5 +30,7 @@ router.delete(
     '/:userId', 
     validateParams(userValidator.userParam),
     UserController.deleteUser);
+
+router.post("/upload-avatar/:id", photoUpload.single("avatar"), UserController.uploadAvatar);
 
 export default router;
