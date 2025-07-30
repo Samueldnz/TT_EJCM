@@ -1,15 +1,33 @@
 import { Router } from 'express';
 import { UserController } from '../controllers/UserController';
-import { validateBody } from '../middlewares/validateBody';
-import { userSchema } from '../schemas/user.schema';
+import { validateBody, validateParams } from '../middlewares/ValidateMiddleware';
+import userValidator from '../config/UserValidator';
 
 const router = Router();
 
-router.post('/', validateBody(userSchema), UserController.createUser);
-router.put('/:userId', validateBody(userSchema), UserController.updateUser);
+router.post(
+    '/', 
+    validateBody(userValidator.createUser),
+    UserController.createUser);
 
-router.get('/:userId', UserController.readUser);
-router.get('/', UserController.readAllUser);
-router.delete('/:userId', UserController.deleteUser);
+router.put(
+    '/:userId', 
+    validateBody(userValidator.updateUser), 
+    validateParams(userValidator.userParam), 
+    UserController.updateUser);
+
+router.get(
+    '/:userId', 
+    validateParams(userValidator.userParam), 
+    UserController.readUser);
+
+router.get(
+    '/', 
+    UserController.readAllUser);
+
+router.delete(
+    '/:userId', 
+    validateParams(userValidator.userParam),
+    UserController.deleteUser);
 
 export default router;
