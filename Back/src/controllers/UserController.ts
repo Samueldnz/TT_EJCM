@@ -38,6 +38,7 @@ export class UserController{
                     id: userId
                 },
                 select: {
+                    id: true,
                     cpf: true,
                     telefone: true,
                     name: true,
