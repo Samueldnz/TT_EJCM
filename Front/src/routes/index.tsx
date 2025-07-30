@@ -6,23 +6,23 @@ import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
+    path: "/",
+    element: <Home />,
+    errorElement: <NotFound />,  // Captura erros da Home e filhos
+  },
+  {
     path: "/login",
     element: <Login />,
-    errorElement: <div className="text-center mt-20 text-red-500">Página não encontrada.</div>,
+    errorElement: <NotFound />,
   },
   {
     path: "/register",
     element: <Register />,
-    errorElement: <div className="text-center mt-20 text-red-500">Página não encontrada.</div>,
-  },
-  {
-    path: "/",
-    element: <Home />,
-    errorElement: <div className="text-center mt-20 text-red-500">Página não encontrada.</div>,
+    errorElement: <NotFound />,
   },
   {
     path: "*",
-    element: <NotFound />, 
+    element: <NotFound />,  // Captura rotas não definidas
   },
 ]);
 
