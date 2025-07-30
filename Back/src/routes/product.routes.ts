@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { ProductController } from '../controllers/ProductController';
 import { validateBody, validateParams } from '../middlewares/ValidateMiddleware';
 import ProductValidator from '../config/ProductValidator';
+import { photoUpload } from '../config/uploader';
 
 const router = Router();
 
@@ -29,5 +30,7 @@ router.delete(
     '/:productId', 
     validateParams(ProductValidator.productParam),
     ProductController.deleteProduct);
+
+router.post("/upload-image/:id", photoUpload.single("productImage"), ProductController.uploadImage);
 
 export default router;

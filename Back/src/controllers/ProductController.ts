@@ -104,4 +104,25 @@ export class ProductController {
     }
   }
 
+  public static async uploadImage(req: Request, res: Response) {
+      try {
+          const { id } = req.params;
+
+          if (!req.file) {
+              return res.status(400).json({ message: "Nenhum arquivo enviado." });
+          }
+
+          const imagePath = `/uploads/photos/${req.file.filename}`;
+
+          const product = await prisma.product.update({
+              where: { id },
+              data: { imageUrl: imagePath }
+          });
+
+          res.status(200).json({ message: "Imagem do produto atualizado com sucesso!", product });
+      } catch (error: any) {
+          res.status(500).json({ error: error.message });
+      }
+  }
+
 }

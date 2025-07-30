@@ -35,7 +35,7 @@ const photoUpload = multer({
     const allowedFileTypes = ["image/png", "image/jpeg", "image/jpg"];
 
     if (!allowedFileTypes.includes(file.mimetype)) {
-      const messsage = "Only the Jpeg, PNG and JPG types are supported";
+      const messsage = "Somente formatos Jpeg, PNG e JPG são suportados";
 
       return callBack(new Error(messsage));
     }
@@ -54,7 +54,7 @@ const audioUpload = multer({
     const allowedAudioTypes = ["audio/mp3", "audio/m4a"];
 
     if (!allowedAudioTypes.includes(file.mimetype)) {
-      const errorMessage = "Foi mal ae, apenas aceitamos MP3 e M4a";
+      const errorMessage = "Apenas aceitamos formatos MP3 e M4a";
 
       return callBack(new Error());
     }
