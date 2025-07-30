@@ -1,5 +1,6 @@
 import { Prisma, PrismaClient } from "../generated/prisma";
 import {Request, Response } from "express";
+import { Mailer } from "../config/mailer";
 const prisma = new PrismaClient()
 
 export class UserController{
@@ -20,6 +21,12 @@ export class UserController{
             const createdUser = await prisma.user.create({
                 data:createInput
             });
+
+            await Mailer.sendEmail(
+                email,
+                "Cadastro realizado com sucesso",
+                `Olá ${name},\n\nSeu cadastro foi efetuado com sucesso na nossa plataforma!\n\nAtenciosamente,\nEquipe Samuel Sampaio do TT - EJCM 2025`
+            );
 
             response.status(201).json({createdUser});
         }catch (error:any){
