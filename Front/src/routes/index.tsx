@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
+import Home from "../pages/Home";
 
 const router = createBrowserRouter([
   {
@@ -16,7 +17,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/",
-    element: <div className="text-center mt-20">Página inicial (teste)</div>,
+    element: <Home />,
+    errorElement: <div className="text-center mt-20 text-red-500">Página não encontrada.</div>,
   },
   {
     path: "*",
