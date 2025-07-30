@@ -11,7 +11,6 @@ export class ProductController {
         price,
         condition,
         amountInStock,
-        isAvailable
       } = req.body;
 
       const data: Prisma.ProductCreateInput = {
@@ -20,7 +19,6 @@ export class ProductController {
         price,
         condition,
         amountInStock,
-        isAvailable
       };
 
       const createdProduct = await prisma.product.create({ data });
