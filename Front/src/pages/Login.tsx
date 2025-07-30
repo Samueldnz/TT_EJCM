@@ -1,6 +1,5 @@
 import { useState } from "react";
 import BackHeader from "../components/BackHeader";
-import InputField from "../components/InputField";
 import FormButton from "../components/FormButton";
 import DividerWithText from "../components/DividerWithText";
 import SocialLoginButtons from "../components/SocialLoginButtons";
