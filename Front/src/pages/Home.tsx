@@ -18,7 +18,7 @@ import tablet from "../assets/tablet.png";
 import teclado from "../assets/teclado.png";
 
 export default function Home() {
-  const [menuOpen, setMenuOpen] = useState(false); // <<< Adicionado
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const [categories] = useState([
     { name: "Celulares", img: celular },
