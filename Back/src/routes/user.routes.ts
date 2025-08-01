@@ -3,8 +3,12 @@ import { UserController } from '../controllers/UserController';
 import { validateBody, validateParams } from '../middlewares/ValidateMiddleware';
 import userValidator from '../config/UserValidator';
 import { photoUpload } from '../config/uploader';
+import passport from 'passport';
 
 const router = Router();
+
+router.post("/login", UserController.login);
+router.get("/acesso", passport.authenticate("jwt", { session: false }), UserController.testeAutenticacao);
 
 router.post(
     '/', 

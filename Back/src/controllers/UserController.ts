@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from "../generated/prisma";
 import {Request, Response } from "express";
 import { Mailer } from "../config/mailer";
+import auth from "../config/auth";
 const prisma = new PrismaClient()
 
 export class UserController{
@@ -9,13 +10,15 @@ export class UserController{
         
         try{
             const {cpf, telefone, name, email, password} = request.body;
+            const {hash, salt} = auth.generatePassword(password);
 
             const createInput: Prisma.UserCreateInput = {
                 cpf: cpf,
                 telefone: telefone,
                 name: name,
                 email: email,
-                password: password
+                hash: hash,
+                salt: salt
             };
 
             const createdUser = await prisma.user.create({
@@ -78,13 +81,15 @@ export class UserController{
 
             const {userId} = request.params; 
             const {cpf, telefone, name, email, password, avatarUrl} = request.body;
+            const {hash, salt} = auth.generatePassword(password);
 
             const createInput: Prisma.UserUpdateInput = {
                 cpf: cpf,
                 telefone: telefone,
                 name: name,
                 email: email,
-                password: password,
+                hash: hash,
+                salt: salt,
                 avatarUrl: avatarUrl,
             };
 
@@ -139,5 +144,47 @@ export class UserController{
             res.status(500).json({ error: error.message });
         }
     }
+
+    static async login(request: Request, response: Response) {
+        try {
+            const {email, password} = request.body;
+            const user = await prisma.user.findUnique({
+                where:{ email: email}
+            });
+
+            if(!user)
+                return response.status(400).json({message:"usuário não existe"})
+
+            const {hash, salt} = user
+
+            if(!auth.checkPassword(password, hash, salt)){
+                return response.status(400).json({message:"Senha incorreta"})
+            }
+            const token = auth.generateJWT(user);
+    
+            return response.status(201).json({message:"Token enviado" ,token: token})
+
+        } catch (error) {
+            return response.status(500).json({message: "Server Error"})
+
+        }
+    }
+
+    static async testeAutenticacao(request: Request, response: Response) {
+        if (request.user) {
+            const { email } = request.user as { email: string };
+            try {
+                return response.status(200).json({
+                    message: "acesso autorizado",
+                    usuario: email
+                });
+            } catch (error) {
+                return response.status(500).json({ error: "Erro interno" });
+            }
+        } else {
+            return response.status(401).json({ message: "acesso não autorizado" });
+        }
+    }
+
 
 }
