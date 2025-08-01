@@ -75,36 +75,39 @@ export class UserController{
         }
     }
 
-    public static async updateUser(request:Request, response:Response){
-        
-        try{
-
-            const {userId} = request.params; 
-            const {cpf, telefone, name, email, password, avatarUrl} = request.body;
-            const {hash, salt} = auth.generatePassword(password);
+    public static async updateUser(request: Request, response: Response) {
+        try {
+            const { userId } = request.params;
+            const { cpf, telefone, name, email, password, avatarUrl } = request.body;
 
             const createInput: Prisma.UserUpdateInput = {
-                cpf: cpf,
-                telefone: telefone,
-                name: name,
-                email: email,
-                hash: hash,
-                salt: salt,
-                avatarUrl: avatarUrl,
+            cpf,
+            telefone,
+            name,
+            email,
+            avatarUrl,
             };
 
+            if (password) {
+            const { hash, salt } = auth.generatePassword(password);
+            createInput.hash = hash;
+            createInput.salt = salt;
+            }
+
             const updatedUser = await prisma.user.update({
-                data:createInput,
-                where: {
-                    id: userId,
-                },
+            data: createInput,
+            where: {
+                id: userId,
+            },
             });
 
-            response.status(200).json({updatedUser});
-        }catch (error:any){
-            response.status(500).json({message:error.message});
+            response.status(200).json({ updatedUser });
+
+        } catch (error: any) {
+            response.status(500).json({ message: error.message });
         }
     }
+
 
     public static async deleteUser(request:Request, response:Response){
         
