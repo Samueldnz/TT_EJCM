@@ -1,5 +1,5 @@
-// src/components/SideMenu.tsx
 import { X, User } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface SideMenuProps {
   isOpen: boolean;
@@ -7,6 +7,13 @@ interface SideMenuProps {
 }
 
 export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
+  const menuItems = [
+    { name: "Editar dados", to: "/editar" },
+    { name: "Meus pedidos", to: "/pedidos" },
+    { name: "Meus produtos", to: "/produtos" },
+    { name: "Meu carrinho", to: "/carrinho" },
+  ];
+
   return (
     <div
       className={`fixed inset-0 z-50 transition-transform ${
@@ -29,16 +36,18 @@ export default function SideMenu({ isOpen, onClose }: SideMenuProps) {
 
         {/* Links */}
         <div className="p-4 space-y-3">
-          {["Editar dados", "Meus pedidos", "Meus produtos", "Meu carrinho"].map(
-            (item, idx) => (
-              <div key={idx}>
-                <button className="w-full text-left text-gray-800 py-2 hover:font-medium">
-                  {item}
-                </button>
-                {idx < 3 && <hr className="border-gray-300" />}
-              </div>
-            )
-          )}
+          {menuItems.map((item, idx) => (
+            <div key={idx}>
+              <Link
+                to={item.to}
+                onClick={onClose}
+                className="block w-full text-left text-gray-800 py-2 hover:font-medium"
+              >
+                {item.name}
+              </Link>
+              {idx < menuItems.length - 1 && <hr className="border-gray-300" />}
+            </div>
+          ))}
         </div>
 
         {/* Logout */}
