@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { Menu, ShoppingCart} from "lucide-react";
+import { Menu, ShoppingCart } from "lucide-react";
 
 import ProductSection from "../components/ProductSection";
+import SideMenu from "../components/SideMenu";
 import { FaFacebookF, FaInstagram, FaTiktok, FaTwitter, FaLinkedinIn } from "react-icons/fa";
 
 import bannerImg from "../assets/banner.png";
@@ -16,9 +17,9 @@ import smartTV from "../assets/smartTV.png";
 import tablet from "../assets/tablet.png";
 import teclado from "../assets/teclado.png";
 
-
-
 export default function Home() {
+  const [menuOpen, setMenuOpen] = useState(false); // <<< Adicionado
+
   const [categories] = useState([
     { name: "Celulares", img: celular },
     { name: "Notebooks", img: notebook },
@@ -45,22 +46,24 @@ export default function Home() {
     ],
   });
 
-    return (
+  return (
     <div className="bg-gray-100 min-h-screen flex flex-col">
       {/* Topbar */}
       <header className="bg-black text-white flex items-center justify-between px-4 py-3">
-        <Menu size={24} />
+        <button onClick={() => setMenuOpen(true)}>
+          <Menu size={24} />
+        </button>
         <ShoppingCart size={24} />
       </header>
 
       <div className="max-w-5xl w-full mx-auto px-4">
         {/* Banner */}
         <div className="flex items-center flex-col bg-white p-4 mt-4 rounded-xl">
-            <h1 className="flex items-center gap-2 text-2xl font-bold text-orange-500 mb-3">
-                <img src="/src/assets/imageLogin.png" alt="Logo" className="w-6 h-6" />
-                Bem-vindo à Elektro!
-            </h1>
-            <img src={bannerImg} alt="Banner" className="rounded-xl w-full h-40 md:h-64 lg:h-80 object-cover" />
+          <h1 className="flex items-center gap-2 text-2xl font-bold text-orange-500 mb-3">
+            <img src="/src/assets/imageLogin.png" alt="Logo" className="w-6 h-6" />
+            Bem-vindo à Elektro!
+          </h1>
+          <img src={bannerImg} alt="Banner" className="rounded-xl w-full h-40 md:h-64 lg:h-80 object-cover" />
         </div>
 
         {/* Categorias */}
@@ -79,10 +82,10 @@ export default function Home() {
           <hr className="border-gray-300" />
         </section>
 
+        {/* Seções de produtos */}
         <ProductSection title="Para você" products={products.recomendados} />
         <ProductSection title="Produtos em destaque" products={products.destaque} />
         <ProductSection title="Mais vendidos" products={products.maisVendidos} />
-
       </div>
 
       {/* Rodapé social */}
@@ -96,6 +99,9 @@ export default function Home() {
           <FaLinkedinIn />
         </div>
       </footer>
+
+      {/* Menu lateral */}
+      <SideMenu isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
     </div>
   );
 }

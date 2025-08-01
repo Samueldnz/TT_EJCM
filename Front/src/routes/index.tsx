@@ -8,7 +8,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
-    errorElement: <NotFound />,  // Captura erros da Home e filhos
+    errorElement: <NotFound />,  
   },
   {
     path: "/login",
